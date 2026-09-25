@@ -57,6 +57,33 @@ body[data-power="full"] .brand{filter:drop-shadow(0 0 18px rgba(100,230,255,.95)
 .r3:after{content:"";position:absolute;inset:-3px;border-radius:50%;border-top:1px solid rgba(150,245,255,.8);border-right:1px solid transparent;border-bottom:1px solid transparent;border-left:1px solid transparent;filter:drop-shadow(0 0 7px rgba(80,220,255,.65));animation:spin 7s linear infinite}
 @keyframes coreScan{0%,18%{transform:translateY(0);opacity:0}35%{opacity:.8}70%{transform:translateY(390%);opacity:.35}100%{transform:translateY(390%);opacity:0}}
 @media(prefers-reduced-motion:reduce){.core .percent:after,.r3:after,.stage:after{animation:none!important}}
+
+/* JAZZY-SAGE-005 — Premium charging motion; composition locked */
+.stage:before{content:"";position:absolute;inset:-18%;z-index:-1;border-radius:50%;background:
+ conic-gradient(from 0deg,transparent 0 12%,rgba(105,235,255,.16) 16%,transparent 22% 47%,rgba(45,201,255,.13) 52%,transparent 58% 82%,rgba(150,245,255,.12) 87%,transparent 93%);
+ -webkit-mask:radial-gradient(circle,transparent 0 56%,#000 58% 61%,transparent 63%);
+ mask:radial-gradient(circle,transparent 0 56%,#000 58% 61%,transparent 63%);
+ filter:drop-shadow(0 0 8px rgba(60,220,255,.45));animation:energyOrbit 11s linear infinite}
+.core{overflow:hidden}
+.core .percent{z-index:3}
+.core .percent:before{content:"";position:absolute;left:50%;top:50%;width:190%;height:190%;transform:translate(-50%,-50%);z-index:-1;border-radius:50%;
+ background:radial-gradient(circle,rgba(105,230,255,.12),transparent 62%);animation:coreBreathe 2.8s ease-in-out infinite}
+.sage-character:before{content:"";position:absolute;z-index:2;left:50%;top:48%;width:64%;height:43%;transform:translateX(-50%);pointer-events:none;
+ background:radial-gradient(ellipse at 50% 82%,rgba(68,220,255,.16),transparent 55%);
+ filter:blur(12px);mix-blend-mode:screen;animation:armorPulse 3.4s ease-in-out infinite}
+body[data-power="low"] .stage:before{animation-duration:16s;opacity:.45}
+body[data-power="low"] .stage:after{animation-duration:3.8s;opacity:.45}
+body[data-power="normal"] .stage:before{animation-duration:11s}
+body[data-power="high"] .stage:before{animation-duration:7s;opacity:1}
+body[data-power="high"] .stage:after{animation-duration:1.8s}
+body[data-power="full"] .stage:before{animation-duration:4.5s;filter:drop-shadow(0 0 14px rgba(150,245,255,.85))}
+body[data-power="full"] .stage:after{animation:fullHalo 1.35s ease-in-out 3,handGlow 2.8s ease-in-out 4.05s infinite}
+body[data-power="full"] .percent small{letter-spacing:.2em}
+@keyframes energyOrbit{to{transform:rotate(360deg)}}
+@keyframes coreBreathe{50%{opacity:.58;transform:translate(-50%,-50%) scale(1.08)}}
+@keyframes armorPulse{50%{opacity:.52;filter:blur(15px) brightness(1.2)}}
+@keyframes fullHalo{50%{opacity:1;transform:scale(1.18);filter:blur(9px) brightness(1.45)}}
+@media(prefers-reduced-motion:reduce){.stage:before,.core .percent:before,.sage-character:before{animation:none!important}}
 </style>
 </head>
 <body>
