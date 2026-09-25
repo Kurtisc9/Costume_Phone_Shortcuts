@@ -13,7 +13,7 @@ body{background:#010409}
 .sage-character img{width:100%;height:100%;object-fit:cover;object-position:center 48%;display:block;transform:scale(1.13);transform-origin:50% 48%;filter:saturate(1.04) contrast(1.06) brightness(.84)}
 .sage-character:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,4,9,.05) 0%,rgba(1,4,9,.04) 58%,rgba(1,4,9,.35) 100%)}
 .screen{position:relative;width:100%;height:100dvh;min-height:650px;display:flex;flex-direction:column;align-items:center;padding:calc(env(safe-area-inset-top) + 26px) 20px calc(env(safe-area-inset-bottom) + 24px);isolation:isolate}
-.screen:before{content:"";position:absolute;inset:0;z-index:-3;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(80,210,255,.025) 4px);pointer-events:none}
+.screen:before{content:"";position:absolute;inset:0;z-index:-3;background:radial-gradient(ellipse at 50% 23%,rgba(0,151,220,.13),transparent 34%),radial-gradient(ellipse at 50% 86%,rgba(0,151,220,.10),transparent 31%),repeating-linear-gradient(0deg,transparent 0 3px,rgba(80,210,255,.025) 4px);pointer-events:none}
 .ambient{position:absolute;width:115vw;height:55vh;top:18%;border-radius:50%;background:radial-gradient(ellipse,rgba(0,184,255,.12),transparent 67%);filter:blur(12px);animation:breathe 4s ease-in-out infinite}
 .header{text-align:center;margin-top:3.2vh;z-index:2}
 .brand{font-size:clamp(24px,7vw,34px);font-weight:850;letter-spacing:.34em;margin-right:-.34em;background:linear-gradient(180deg,#fff 0,#a9eaff 38%,#3cc7ff 63%,#0b70a9 100%);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(50,205,255,.65))}
@@ -84,6 +84,11 @@ body[data-power="full"] .percent small{letter-spacing:.2em}
 @keyframes armorPulse{50%{opacity:.52;filter:blur(15px) brightness(1.2)}}
 @keyframes fullHalo{50%{opacity:1;transform:scale(1.18);filter:blur(9px) brightness(1.45)}}
 @media(prefers-reduced-motion:reduce){.stage:before,.core .percent:before,.sage-character:before{animation:none!important}}
+
+/* JAZZY-SAGE-006 — top/bottom gap correction */
+.header:after{content:"";display:block;width:min(72vw,330px);height:1px;margin:22px auto 0;background:linear-gradient(90deg,transparent,rgba(74,213,255,.34),transparent);box-shadow:0 0 18px rgba(0,190,255,.16)}
+.screen:after{content:"";position:absolute;z-index:-1;left:0;right:0;top:18%;height:24%;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(4,30,46,.28) 48%,rgba(0,129,190,.08) 76%,transparent)}
+.footer:before{content:"";position:absolute;left:50%;bottom:-4.5vh;width:82vw;height:12vh;transform:translateX(-50%);z-index:-1;background:radial-gradient(ellipse,rgba(0,175,235,.12),transparent 68%);filter:blur(12px);pointer-events:none}
 </style>
 </head>
 <body>
