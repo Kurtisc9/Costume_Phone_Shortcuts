@@ -39,6 +39,16 @@ body{background:#010409}
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes spinR{to{transform:rotate(-360deg)}}@keyframes pulse{50%{transform:scale(1.045);opacity:.45}}@keyframes bolt{50%{transform:scale(1.14);opacity:.65}}@keyframes breathe{50%{opacity:.58;transform:scale(1.05)}}@keyframes sheen{to{background-position:-220% 0}}
 @media(max-height:760px){.header{margin-top:1vh}.stage{width:min(68vh,82vw);margin-top:2vh}.telemetry{margin-top:2vh}.cell{padding:7px 4px}}
 @media(prefers-reduced-motion:reduce){.ring,.ambient,.bolt,.kurtis{animation:none!important}}
+
+body[data-power="low"] .core{box-shadow:0 0 22px rgba(0,177,255,.35),0 0 48px rgba(0,126,255,.18),inset 0 0 34px rgba(0,166,255,.18)}
+body[data-power="normal"] .core{box-shadow:0 0 30px rgba(0,177,255,.52),0 0 78px rgba(0,126,255,.27),inset 0 0 46px rgba(0,166,255,.25)}
+body[data-power="high"] .core{box-shadow:0 0 38px rgba(70,220,255,.72),0 0 105px rgba(0,166,255,.38),inset 0 0 58px rgba(85,225,255,.32)}
+body[data-power="full"] .core{box-shadow:0 0 48px rgba(150,245,255,.9),0 0 135px rgba(0,195,255,.5),inset 0 0 68px rgba(120,240,255,.4);animation:fullCore 1.35s ease-in-out infinite}
+body[data-power="low"] .ambient{opacity:.42}
+body[data-power="high"] .ambient,body[data-power="full"] .ambient{opacity:.92}
+body[data-power="high"] .bolt,body[data-power="full"] .bolt{filter:drop-shadow(0 0 12px #67e9ff)}
+body[data-power="full"] .brand{filter:drop-shadow(0 0 18px rgba(100,230,255,.95))}
+@keyframes fullCore{50%{transform:scale(1.025);filter:brightness(1.18)}}
 </style>
 </head>
 <body>
@@ -64,6 +74,10 @@ const raw=params.get("battery")??"0";
 const value=Math.max(0,Math.min(100,parseInt(raw,10)||0));
 document.getElementById("battery").textContent=value;
 document.getElementById("core").style.setProperty("--charge",value+"%");
+const powerState=value<=20?"low":value<80?"normal":value<100?"high":"full";
+document.body.dataset.power=powerState;
+const powerLabel=document.querySelector(".percent small");
+if(value===100) powerLabel.textContent="FULLY CHARGED";
 const sageVideo=document.getElementById("sageVideo");
 sageVideo.muted=true;
 sageVideo.setAttribute("muted","");
