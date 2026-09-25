@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SAGE Charging Mode</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#02060b;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff}
+body{display:grid;place-items:center;background:radial-gradient(circle at 50% 48%,rgba(0,174,255,.22) 0%,rgba(0,90,180,.08) 28%,#02060b 65%)}
+.screen{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 24px) 22px calc(env(safe-area-inset-bottom) + 24px);text-align:center}
+.sage{font-size:22px;letter-spacing:8px;font-weight:700;color:#64d7ff;margin-bottom:45px;text-shadow:0 0 18px #00aaff}
+.core{width:min(68vw,320px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;border:3px solid #36c9ff;box-shadow:0 0 20px #008cff,0 0 55px rgba(0,174,255,.75),inset 0 0 45px rgba(0,174,255,.35);background:radial-gradient(circle,#07182b 0 42%,#03101e 70%)}
+.core:before,.core:after{content:"";position:absolute;border-radius:50%;inset:-15px;border:2px solid rgba(0,174,255,.45);animation:pulse 2s ease-in-out infinite}
+.core:after{inset:-31px;opacity:.45;animation-delay:1s}
+.percent{font-size:clamp(58px,19vw,92px);font-weight:800;letter-spacing:-4px;text-shadow:0 0 24px #009dff}
+.status{margin-top:52px;font-size:17px;letter-spacing:7px;color:#8ce5ff}.bolt{font-size:34px;color:#4bd9ff;margin-top:12px;filter:drop-shadow(0 0 12px #00aaff)}
+.kurtis{position:absolute;bottom:calc(env(safe-area-inset-bottom) + 32px);font-weight:800;font-size:20px;letter-spacing:5px;color:#8be7ff;text-shadow:0 0 14px #009dff}
+@keyframes pulse{0%,100%{transform:scale(.98);opacity:.35}50%{transform:scale(1.04);opacity:1}}
+</style>
+</head>
+<body>
+<div class="screen">
+<div class="sage">SAGE // POWER CORE</div>
+<div class="core"><div class="percent"><span id="battery">--</span>%</div></div>
+<div class="bolt">⚡</div>
+<div class="status">CHARGING</div>
+<div class="kurtis">KURTISC</div>
+</div>
+<script>
+const p=new URLSearchParams(location.search);
+let raw=(p.get("battery")||"").replace("%","");
+let n=parseInt(raw,10);
+if(!Number.isFinite(n)) n=0;
+n=Math.max(0,Math.min(100,n));
+document.getElementById("battery").textContent=n;
+</script>
+</body>
+</html>
