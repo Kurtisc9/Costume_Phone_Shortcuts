@@ -7,112 +7,254 @@
 <title>SAGE Charging Mode</title>
 <style>
 @property --charge{syntax:"<percentage>";inherits:false;initial-value:0%}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#010409;color:#eefaff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-body{background:#010409}
-.sage-character{position:absolute;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
-.sage-character img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transform:none;filter:saturate(1.02) contrast(1.03) brightness(.9)}
-.sage-character:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,4,9,.05) 0%,rgba(1,4,9,.04) 58%,rgba(1,4,9,.35) 100%)}
-.screen{position:relative;width:100%;height:100dvh;min-height:650px;display:flex;flex-direction:column;align-items:center;padding:calc(env(safe-area-inset-top) + 26px) 20px calc(env(safe-area-inset-bottom) + 24px);isolation:isolate}
-.screen:before{content:"";position:absolute;inset:0;z-index:-3;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(80,210,255,.018) 4px);pointer-events:none}
-.ambient{position:absolute;width:115vw;height:55vh;top:18%;border-radius:50%;background:radial-gradient(ellipse,rgba(0,184,255,.12),transparent 67%);filter:blur(12px);animation:breathe 4s ease-in-out infinite}
-.header{display:none}
-.brand{font-size:clamp(24px,7vw,34px);font-weight:850;letter-spacing:.34em;margin-right:-.34em;background:linear-gradient(180deg,#fff 0,#a9eaff 38%,#3cc7ff 63%,#0b70a9 100%);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(50,205,255,.65))}
-.sub{margin-top:8px;font-size:9px;letter-spacing:.52em;margin-right:-.52em;color:#6bcff4;text-transform:uppercase;opacity:.85}
-.stage{position:absolute;z-index:3;width:min(31vw,150px);aspect-ratio:1;left:50%;top:61.2%;transform:translate(-50%,-50%);display:grid;place-items:center;filter:drop-shadow(0 0 24px rgba(0,205,255,.48))}
-.ring{position:absolute;border-radius:50%}
-.r1{inset:0;border:1px solid rgba(70,210,255,.34);box-shadow:0 0 28px rgba(0,174,255,.13);animation:spin 16s linear infinite}
-.r1:before,.r1:after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:#72e3ff;box-shadow:0 0 15px #00bfff;top:10%;left:22%}.r1:after{top:auto;left:auto;right:12%;bottom:25%}
-.r2{inset:7%;border:2px dashed rgba(43,193,255,.26);animation:spinR 22s linear infinite}
-.r3{inset:13%;border:1px solid rgba(77,218,255,.55);box-shadow:inset 0 0 24px rgba(0,165,255,.12)}
-.core{--charge:0%;position:absolute;inset:20%;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 46%,rgba(4,20,34,.88) 0 42%,rgba(1,9,16,.92) 72%);box-shadow:0 0 24px rgba(0,177,255,.5),0 0 58px rgba(0,126,255,.26),inset 0 0 32px rgba(0,166,255,.22);backdrop-filter:blur(1.5px);overflow:hidden}
-.core:before{content:"";position:absolute;inset:-4px;border-radius:50%;padding:4px;background:conic-gradient(#b8f7ff 0%,#52dcff var(--charge),rgba(20,102,145,.18) 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;filter:drop-shadow(0 0 10px #5ce7ff)}
-.core:after{content:"";position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(128,231,255,.24);animation:pulse 2.2s ease-in-out infinite}
-.percent{position:relative;text-align:center;font-size:clamp(28px,8vw,39px);font-weight:850;letter-spacing:-.05em;line-height:.9;text-shadow:0 0 18px rgba(0,181,255,.9)}
-.percent small{display:block;font-size:6px;letter-spacing:.3em;margin:10px 0 0 .3em;color:#9aefff;font-weight:700}
-.bolt{position:absolute;bottom:5%;font-size:18px;color:#72e8ff;text-shadow:0 0 12px #00aaff;animation:bolt 1.6s ease-in-out infinite}
-.telemetry{display:none}
-.cell{border:1px solid rgba(70,203,255,.18);background:linear-gradient(180deg,rgba(8,34,52,.68),rgba(3,13,22,.64));padding:10px 5px;border-radius:10px;text-align:center;box-shadow:inset 0 1px rgba(170,235,255,.07);backdrop-filter:blur(7px)}
-.cell b{display:block;font-size:8px;letter-spacing:.14em;color:#55cfff}.cell span{display:block;margin-top:5px;font-size:8px;letter-spacing:.09em;color:#9bb5c2}
-.footer{display:none}
-.kurtis{font-size:clamp(19px,5.5vw,26px);font-weight:850;letter-spacing:.24em;margin-right:-.24em;background:linear-gradient(105deg,#597b8d 0,#e9fbff 35%,#6fdcff 50%,#fff 64%,#55798b 100%);background-size:220% 100%;-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 6px rgba(0,183,255,.38));opacity:.82;animation:sheen 5.5s linear infinite}
-.footerline{width:120px;height:1px;margin:10px auto 0;background:linear-gradient(90deg,transparent,#45d4ff,transparent);box-shadow:0 0 8px #00b7ff}
-@keyframes spin{to{transform:rotate(360deg)}}@keyframes spinR{to{transform:rotate(-360deg)}}@keyframes pulse{50%{transform:scale(1.045);opacity:.45}}@keyframes bolt{50%{transform:scale(1.14);opacity:.65}}@keyframes breathe{50%{opacity:.58;transform:scale(1.05)}}@keyframes sheen{to{background-position:-220% 0}}
-@media(max-height:760px){.header{margin-top:1vh}.stage{width:min(34vw,155px);top:55%}.telemetry{bottom:11.5%}.footer{bottom:4.5%}.cell{padding:7px 4px}}.sage-character{top:25%;height:54vh}.stage{width:min(56vw,250px);margin-top:14vh}.telemetry{margin-top:1.5vh}.cell{padding:7px 4px}}
-@media(prefers-reduced-motion:reduce){.ring,.ambient,.bolt,.kurtis{animation:none!important}}
-
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  min-width:100%;
+  min-height:100%;
+  overflow:hidden;
+  background:#010409;
+  color:#eefaff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+body{position:fixed;inset:0}
+.screen{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100dvh;
+  overflow:hidden;
+  isolation:isolate;
+  background:#010409;
+}
+.master{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  pointer-events:none;
+}
+.master img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:50% 50%;
+  max-width:none;
+  max-height:none;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.master:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 61%,rgba(0,190,255,.08),transparent 24%),
+    repeating-linear-gradient(0deg,transparent 0 3px,rgba(80,210,255,.012) 4px);
+}
+.stage{
+  position:absolute;
+  z-index:5;
+  left:50%;
+  top:61.3%;
+  width:min(31vw,150px);
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  display:grid;
+  place-items:center;
+  filter:drop-shadow(0 0 24px rgba(0,205,255,.48));
+}
+.ring{position:absolute;border-radius:50%;pointer-events:none}
+.r1{
+  inset:0;
+  border:1px solid rgba(100,225,255,.38);
+  box-shadow:0 0 25px rgba(0,174,255,.18);
+  animation:spin 16s linear infinite;
+}
+.r1:before,.r1:after{
+  content:"";
+  position:absolute;
+  width:6px;height:6px;border-radius:50%;
+  background:#8cecff;
+  box-shadow:0 0 12px #00bfff;
+  top:10%;left:22%;
+}
+.r1:after{top:auto;left:auto;right:12%;bottom:25%}
+.r2{
+  inset:7%;
+  border:1.5px dashed rgba(65,205,255,.28);
+  animation:spinR 22s linear infinite;
+}
+.r3{
+  inset:13%;
+  border:1px solid rgba(100,225,255,.45);
+  box-shadow:inset 0 0 18px rgba(0,165,255,.12);
+}
+.r3:after{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  border-top:1px solid rgba(180,250,255,.85);
+  border-right:1px solid transparent;
+  border-bottom:1px solid transparent;
+  border-left:1px solid transparent;
+  filter:drop-shadow(0 0 7px rgba(80,220,255,.65));
+  animation:spin 7s linear infinite;
+}
+.core{
+  --charge:0%;
+  position:absolute;
+  inset:20%;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 46%,rgba(4,20,34,.9) 0 42%,rgba(1,9,16,.94) 72%);
+  box-shadow:0 0 24px rgba(0,177,255,.5),0 0 58px rgba(0,126,255,.26),inset 0 0 32px rgba(0,166,255,.22);
+  backdrop-filter:blur(1.5px);
+}
+.core:before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  padding:4px;
+  background:conic-gradient(#b8f7ff 0%,#52dcff var(--charge),rgba(20,102,145,.18) 0);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  filter:drop-shadow(0 0 10px #5ce7ff);
+}
+.core:after{
+  content:"";
+  position:absolute;
+  inset:8%;
+  border-radius:50%;
+  border:1px solid rgba(128,231,255,.24);
+  animation:pulse 2.2s ease-in-out infinite;
+}
+.percent{
+  position:relative;
+  z-index:3;
+  text-align:center;
+  font-size:clamp(28px,8vw,39px);
+  font-weight:850;
+  letter-spacing:-.05em;
+  line-height:.9;
+  text-shadow:0 0 18px rgba(0,181,255,.9);
+}
+.percent small{
+  display:block;
+  margin:10px 0 0 .3em;
+  font-size:6px;
+  font-weight:700;
+  letter-spacing:.3em;
+  color:#9aefff;
+}
+.percent:after{
+  content:"";
+  position:absolute;
+  left:-18%;right:-18%;top:-45%;
+  height:24%;
+  background:linear-gradient(180deg,transparent,rgba(125,235,255,.18),transparent);
+  filter:blur(3px);
+  pointer-events:none;
+  animation:coreScan 3.8s ease-in-out infinite;
+}
+.percent:before{
+  content:"";
+  position:absolute;
+  left:50%;top:50%;
+  width:190%;height:190%;
+  transform:translate(-50%,-50%);
+  z-index:-1;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(105,230,255,.12),transparent 62%);
+  animation:coreBreathe 2.8s ease-in-out infinite;
+}
+.bolt{
+  position:absolute;
+  bottom:5%;
+  font-size:18px;
+  color:#72e8ff;
+  text-shadow:0 0 12px #00aaff;
+  animation:bolt 1.6s ease-in-out infinite;
+}
+.stage:before{
+  content:"";
+  position:absolute;
+  inset:-18%;
+  z-index:-1;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0 12%,rgba(105,235,255,.16) 16%,transparent 22% 47%,rgba(45,201,255,.13) 52%,transparent 58% 82%,rgba(150,245,255,.12) 87%,transparent 93%);
+  -webkit-mask:radial-gradient(circle,transparent 0 56%,#000 58% 61%,transparent 63%);
+  mask:radial-gradient(circle,transparent 0 56%,#000 58% 61%,transparent 63%);
+  filter:drop-shadow(0 0 8px rgba(60,220,255,.45));
+  animation:energyOrbit 11s linear infinite;
+}
+.stage:after{
+  content:"";
+  position:absolute;
+  inset:-34%;
+  z-index:-1;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(72,224,255,.22) 0%,rgba(0,174,255,.10) 38%,transparent 68%);
+  filter:blur(12px);
+  animation:handGlow 2.4s ease-in-out infinite;
+}
 body[data-power="low"] .core{box-shadow:0 0 22px rgba(0,177,255,.35),0 0 48px rgba(0,126,255,.18),inset 0 0 34px rgba(0,166,255,.18)}
-body[data-power="normal"] .core{box-shadow:0 0 30px rgba(0,177,255,.52),0 0 78px rgba(0,126,255,.27),inset 0 0 46px rgba(0,166,255,.25)}
-body[data-power="high"] .core{box-shadow:0 0 38px rgba(70,220,255,.72),0 0 105px rgba(0,166,255,.38),inset 0 0 58px rgba(85,225,255,.32)}
-body[data-power="full"] .core{box-shadow:0 0 48px rgba(150,245,255,.9),0 0 135px rgba(0,195,255,.5),inset 0 0 68px rgba(120,240,255,.4);animation:fullCore 1.35s ease-in-out infinite}
-body[data-power="low"] .ambient{opacity:.42}
-body[data-power="high"] .ambient,body[data-power="full"] .ambient{opacity:.92}
-body[data-power="high"] .bolt,body[data-power="full"] .bolt{filter:drop-shadow(0 0 12px #67e9ff)}
-body[data-power="full"] .brand{filter:drop-shadow(0 0 18px rgba(100,230,255,.95))}
-@keyframes fullCore{50%{transform:scale(1.025);filter:brightness(1.18)}}
-
-.stage:after{content:"";position:absolute;inset:-34%;z-index:-1;border-radius:50%;background:radial-gradient(circle,rgba(72,224,255,.22) 0%,rgba(0,174,255,.10) 38%,transparent 68%);filter:blur(12px);animation:handGlow 2.4s ease-in-out infinite}
-@keyframes handGlow{50%{opacity:.62;transform:scale(1.055)}}
-
-.core .percent:after{content:"";position:absolute;left:-18%;right:-18%;top:-45%;height:24%;background:linear-gradient(180deg,transparent,rgba(125,235,255,.18),transparent);filter:blur(3px);pointer-events:none;animation:coreScan 3.8s ease-in-out infinite}
-.r3:after{content:"";position:absolute;inset:-3px;border-radius:50%;border-top:1px solid rgba(150,245,255,.8);border-right:1px solid transparent;border-bottom:1px solid transparent;border-left:1px solid transparent;filter:drop-shadow(0 0 7px rgba(80,220,255,.65));animation:spin 7s linear infinite}
-@keyframes coreScan{0%,18%{transform:translateY(0);opacity:0}35%{opacity:.8}70%{transform:translateY(390%);opacity:.35}100%{transform:translateY(390%);opacity:0}}
-@media(prefers-reduced-motion:reduce){.core .percent:after,.r3:after,.stage:after{animation:none!important}}
-
-/* JAZZY-SAGE-005 — Premium charging motion; composition locked */
-.stage:before{content:"";position:absolute;inset:-18%;z-index:-1;border-radius:50%;background:
- conic-gradient(from 0deg,transparent 0 12%,rgba(105,235,255,.16) 16%,transparent 22% 47%,rgba(45,201,255,.13) 52%,transparent 58% 82%,rgba(150,245,255,.12) 87%,transparent 93%);
- -webkit-mask:radial-gradient(circle,transparent 0 56%,#000 58% 61%,transparent 63%);
- mask:radial-gradient(circle,transparent 0 56%,#000 58% 61%,transparent 63%);
- filter:drop-shadow(0 0 8px rgba(60,220,255,.45));animation:energyOrbit 11s linear infinite}
-.core{overflow:hidden}
-.core .percent{z-index:3}
-.core .percent:before{content:"";position:absolute;left:50%;top:50%;width:190%;height:190%;transform:translate(-50%,-50%);z-index:-1;border-radius:50%;
- background:radial-gradient(circle,rgba(105,230,255,.12),transparent 62%);animation:coreBreathe 2.8s ease-in-out infinite}
-.sage-character:before{content:"";position:absolute;z-index:2;left:50%;top:48%;width:64%;height:43%;transform:translateX(-50%);pointer-events:none;
- background:radial-gradient(ellipse at 50% 82%,rgba(68,220,255,.16),transparent 55%);
- filter:blur(12px);mix-blend-mode:screen;animation:armorPulse 3.4s ease-in-out infinite}
 body[data-power="low"] .stage:before{animation-duration:16s;opacity:.45}
 body[data-power="low"] .stage:after{animation-duration:3.8s;opacity:.45}
 body[data-power="normal"] .stage:before{animation-duration:11s}
+body[data-power="high"] .core{box-shadow:0 0 38px rgba(70,220,255,.72),0 0 105px rgba(0,166,255,.38),inset 0 0 58px rgba(85,225,255,.32)}
 body[data-power="high"] .stage:before{animation-duration:7s;opacity:1}
 body[data-power="high"] .stage:after{animation-duration:1.8s}
+body[data-power="full"] .core{box-shadow:0 0 48px rgba(150,245,255,.9),0 0 135px rgba(0,195,255,.5),inset 0 0 68px rgba(120,240,255,.4);animation:fullCore 1.35s ease-in-out infinite}
 body[data-power="full"] .stage:before{animation-duration:4.5s;filter:drop-shadow(0 0 14px rgba(150,245,255,.85))}
 body[data-power="full"] .stage:after{animation:fullHalo 1.35s ease-in-out 3,handGlow 2.8s ease-in-out 4.05s infinite}
 body[data-power="full"] .percent small{letter-spacing:.2em}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinR{to{transform:rotate(-360deg)}}
+@keyframes pulse{50%{transform:scale(1.045);opacity:.45}}
+@keyframes bolt{50%{transform:scale(1.14);opacity:.65}}
 @keyframes energyOrbit{to{transform:rotate(360deg)}}
+@keyframes handGlow{50%{opacity:.62;transform:scale(1.055)}}
+@keyframes coreScan{0%,18%{transform:translateY(0);opacity:0}35%{opacity:.8}70%{transform:translateY(390%);opacity:.35}100%{transform:translateY(390%);opacity:0}}
 @keyframes coreBreathe{50%{opacity:.58;transform:translate(-50%,-50%) scale(1.08)}}
-@keyframes armorPulse{50%{opacity:.52;filter:blur(15px) brightness(1.2)}}
+@keyframes fullCore{50%{transform:scale(1.025);filter:brightness(1.18)}}
 @keyframes fullHalo{50%{opacity:1;transform:scale(1.18);filter:blur(9px) brightness(1.45)}}
-@media(prefers-reduced-motion:reduce){.stage:before,.core .percent:before,.sage-character:before{animation:none!important}}
-
-/* JAZZY-SAGE-006 — top/bottom gap correction */
-.header:after{display:none}
-.screen:after{display:none}
-.footer:before{display:none}
-
-/* JAZZY-SAGE-008 — authoritative 9:16 production overrides */
 @media(max-height:760px){
-  .stage{width:min(29vw,140px);top:61%}
+  .stage{width:min(29vw,140px);top:61.1%}
+}
+@media(prefers-reduced-motion:reduce){
+  .ring,.bolt,.stage:before,.stage:after,.core:after,.percent:before,.percent:after,.r3:after{animation:none!important}
 }
 </style>
 </head>
 <body>
 <main class="screen">
-<div class="ambient"></div>
-<header class="header"><div class="brand">SAGE</div><div class="sub">Adaptive Power Interface</div></header>
-<div class="sage-character" id="sageCharacter"><img src="./Assets/Sage_Master_9x16.PNG?v=1" alt="" aria-hidden="true"></div>
-<section class="stage" aria-label="Battery charging status">
-<div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
-<div class="core" id="core"><div class="percent"><span id="battery">--</span>%<small>POWER CORE</small></div></div>
-<div class="bolt">ϟ</div>
-</section>
-<section class="telemetry">
-<div class="cell"><b>POWER</b><span>CONNECTED</span></div>
-<div class="cell"><b>SYSTEM</b><span>OPTIMIZING</span></div>
-<div class="cell"><b>AI CORE</b><span>ONLINE</span></div>
-</section>
-
-<footer class="footer"><div class="kurtis">KURTISC</div><div class="footerline"></div></footer>
+  <div class="master">
+    <img src="./Assets/Sage_Master_9x16.PNG?v=2" alt="" aria-hidden="true">
+  </div>
+  <section class="stage" aria-label="Battery charging status">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="core" id="core">
+      <div class="percent"><span id="battery">--</span>%<small>POWER CORE</small></div>
+    </div>
+    <div class="bolt">ϟ</div>
+  </section>
 </main>
 <script>
 const params=new URLSearchParams(location.search);
@@ -122,8 +264,7 @@ document.getElementById("battery").textContent=value;
 document.getElementById("core").style.setProperty("--charge",value+"%");
 const powerState=value<=20?"low":value<80?"normal":value<100?"high":"full";
 document.body.dataset.power=powerState;
-const powerLabel=document.querySelector(".percent small");
-if(value===100) powerLabel.textContent="FULLY CHARGED";
-
+if(value===100) document.querySelector(".percent small").textContent="FULLY CHARGED";
 </script>
-</body></html>
+</body>
+</html>
